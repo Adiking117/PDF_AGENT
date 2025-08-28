@@ -63,8 +63,9 @@ def _deserialize_state(state: dict) -> PDFChatState:
 
 
 # --- CRUD Operations ---
-def create_workflow(db: Session, initial_state: PDFChatState) -> str:
-    workflow_id = str(uuid.uuid4())
+def create_workflow(db: Session, initial_state: PDFChatState, workflow_id: str | None = None) -> str:
+    if workflow_id is None:
+        workflow_id = str(uuid.uuid4())
     db_obj = WorkflowDB(
         workflow_id=workflow_id,
         state=_serialize_state(initial_state)
